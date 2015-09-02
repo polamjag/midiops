@@ -3,8 +3,8 @@ require 'unimidi'
 
 ob = MIDIOps::Observer.new
 
-ob.on [144, 0, 127] do
-  `say Hello`
+ob.on [144, 48, 127] do
+  spawn 'say Hello'
 end
 
-ob.listen UniMIDI::Input.first.open
+ob.listen_device 'Launchpad S'
