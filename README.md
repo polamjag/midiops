@@ -36,7 +36,7 @@ observer.listen_first
 
 Execute and press C5 key on your midi device.
 
-Optionally, you can set number of worker thread like this:
+Optionally, you can set number of worker thread for massive parallelism like this:
 
 ```ruby
 require 'unimidi'
