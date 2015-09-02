@@ -1,8 +1,12 @@
 # MIDIOps
 
+[![Gem Version](https://badge.fury.io/rb/midiops.svg)](https://rubygems.org/gems/midiops)
+
 MIDI Operator. Heavily inspired by [this blog entry](http://hitode909.hatenablog.com/entry/2015/07/28/134304) and [hitode909/sketch-midi](https://github.com/hitode909/sketch-midi).
 
 ## Installation
+
+[MIDIOps is available on Rubygems](https://rubygems.org/gems/midiops).
 
 Add this line to your application's Gemfile:
 
