@@ -1,21 +1,21 @@
-require 'midiops/handlers'
+require 'midiops/handler'
 require 'unimidi'
 
 module MIDIOps
   class Observer
-    def initialize
-      @handlers = Handlers.new
+    def initialize(worker_number = 1)
+      @handler = Handler.new worker_number
     end
 
     def on event, &handler
-      @handlers.add event, handler
+      @handler.add event, handler
     end
 
     def listen input
       loop do
         input.gets.each do |events|
           events[:data].each do |ev|
-            @handlers.handle ev
+            @handler.handle ev
           end
         end
       end

@@ -1,10 +1,10 @@
 require 'midiops'
 require 'unimidi'
 
-ob = MIDIOps::Observer.new
+ob = MIDIOps::Observer.new 3
 
 ob.on [144, 48, 127] do
-  spawn 'say Hello'
+  `say Hello`
 end
 
 ob.listen_device 'Launchpad S'
