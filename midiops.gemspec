@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["polamjag"]
   spec.email         = ["s@polamjag.info"]
 
-  spec.summary       = %q{midiops}
+  spec.summary       = %q{A MIDI Operator.}
+  spec.description   = "MIDIOps is to automate some work with MIDI devices."
   spec.homepage      = "https://github.com/polamjag/midiops"
   spec.license       = "MIT"
 
