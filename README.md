@@ -1,8 +1,6 @@
-# Midiops
+# MIDIOps
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/midiops`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+MIDI Operator. Heavily inspired by [this blog entry](http://hitode909.hatenablog.com/entry/2015/07/28/134304) and [hitode909/sketch-midi](https://github.com/hitode909/sketch-midi).
 
 ## Installation
 
@@ -22,7 +20,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This is a super simple example:
+
+```ruby
+require 'unimidi'
+
+observer = MIDIOps::Observer.new
+
+observer.on [144, 72, 127] do
+  puts "Ch.0.C5 pressed!"
+end
+
+observer.listen_first
+```
+
+Execute and press C5 key on your midi device.
+
+Optionally, you can set number of worker thread like this:
+
+```ruby
+require 'unimidi'
+
+observer = MIDIOps::Observer.new 3 # three workers
+
+# ...
+```
+
+See `/examples` for more materials.
 
 ## Development
 
@@ -32,10 +56,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/midiops. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/polamjag/midiops. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
