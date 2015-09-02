@@ -7,4 +7,4 @@ ob.on [144, 0, 127] do
   `notify-send '#{Time.now}'`
 end
 
-ob.listen UniMIDI::Input.first.open
+ob.listen_first

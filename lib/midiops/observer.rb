@@ -23,13 +23,17 @@ module MIDIOps
 
     def listen_device device_name
       if !(dev = UniMIDI::Input.find_by_name device_name).nil?
-        listen dev
+        listen dev.open
       elsif !(dev = UniMIDI::Input.find { |input| input.name.include? device_name }).nil?
-        listen dev
+        listen dev.open
       else
         raise RuntimeError,
               "Specified device \"#{device_name}\" not available; available device(s): #{UniMIDI::Input.map{|i| '"' + i.name + '"' }.join(', ')}"
       end
+    end
+
+    def listen_first
+      listen UniMIDI::Input.first.open
     end
   end
 end
