@@ -27,7 +27,7 @@ Or install it yourself as:
 This is a super simple example:
 
 ```ruby
-require 'unimidi'
+require 'midiops'
 
 observer = MIDIOps::Observer.new
 
@@ -43,7 +43,7 @@ Execute and press C5 key on your midi device.
 Optionally, you can set number of worker thread for massive parallelism like this:
 
 ```ruby
-require 'unimidi'
+require 'midiops'
 
 observer = MIDIOps::Observer.new 3 # three workers
 
