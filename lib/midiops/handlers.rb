@@ -1,5 +1,4 @@
 require 'core_ext/hash'
-require 'thread'
 
 module MIDIOps
   class Handlers
@@ -12,7 +11,6 @@ module MIDIOps
     def initialize
       @handlers = {}
       @events = []
-      @threads = []
     end
 
     def add event, handler

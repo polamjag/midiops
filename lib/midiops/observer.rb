@@ -1,4 +1,5 @@
 require 'midiops/handlers'
+require 'unimidi'
 
 module MIDIOps
   class Observer
@@ -17,6 +18,17 @@ module MIDIOps
             @handlers.handle ev
           end
         end
+      end
+    end
+
+    def listen_device device_name
+      if !(dev = UniMIDI::Input.find_by_name device_name).nil?
+        listen dev
+      elsif !(dev = UniMIDI::Input.find { |input| input.name.include? device_name }).nil?
+        listen dev
+      else
+        raise RuntimeError,
+              "Specified device \"#{device_name}\" not available; available device(s): #{UniMIDI::Input.map{|i| '"' + i.name + '"' }.join(', ')}"
       end
     end
   end
