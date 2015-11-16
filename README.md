@@ -1,8 +1,9 @@
 # MIDIOps
 
 [![Gem Version](https://badge.fury.io/rb/midiops.svg)](https://rubygems.org/gems/midiops)
+[![Circle CI](https://circleci.com/gh/polamjag/midiops.svg?style=svg)](https://circleci.com/gh/polamjag/midiops)
 
-MIDI Operator. Heavily inspired by [this blog entry](http://hitode909.hatenablog.com/entry/2015/07/28/134304) and [hitode909/sketch-midi](https://github.com/hitode909/sketch-midi).
+MIDI Operations. Heavily inspired by [this blog entry](http://hitode909.hatenablog.com/entry/2015/07/28/134304) and [hitode909/sketch-midi](https://github.com/hitode909/sketch-midi).
 
 ## Installation
 
