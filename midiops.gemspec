@@ -5,7 +5,7 @@ require 'midiops/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "midiops"
-  spec.version       = Midiops::VERSION
+  spec.version       = MIDIOps::VERSION
   spec.authors       = ["polamjag"]
   spec.email         = ["s@polamjag.info"]
 

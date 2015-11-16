@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-describe Midiops do
+describe MIDIOps do
   it 'has a version number' do
-    expect(Midiops::VERSION).not_to be nil
+    expect(MIDIOps::VERSION).not_to be nil
   end
-
 end

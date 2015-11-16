@@ -1,3 +1,3 @@
-module Midiops
+module MIDIOps
   VERSION = "0.1.1"
 end

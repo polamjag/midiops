@@ -1,6 +1,6 @@
 require "midiops/version"
 require "midiops/observer"
 
-module Midiops
+module MIDIOps
   # Your code goes here...
 end
