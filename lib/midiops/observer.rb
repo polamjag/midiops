@@ -18,13 +18,13 @@ module MIDIOps
       @handler.add [176+ch, number, :ARG], handler
     end
 
-    def on_key_press ch, key, octave, &handler
-      @handler.add [144+ch, MIDIOps::Note.key_to_code(key, octave), :ARG], handler
+    def on_key_press ch, note_string, &handler
+      @handler.add [144+ch, MIDIOps::Note.note_to_code(note_string), :ARG], handler
     end
     alias_method :on_key, :on_key_press
 
     def on_key_release ch, key, octave, &handler
-      @handler.add [128+ch, MIDIOps::Note.key_to_code(key, octave), :ARG], handler
+      @handler.add [128+ch, MIDIOps::Note.note_to_code(note_string), :ARG], handler
     end
 
     def listen input

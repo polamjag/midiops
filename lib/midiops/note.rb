@@ -35,6 +35,29 @@ module MIDIOps
       def key_to_code key, octave
         KEY_OFFSETS[key] + 12 + (12 * octave)
       end
+
+      def parse_note note
+        # formats to accept: "C3" / "B-1" / "C#4" (sharp) / "Db5" (flat)
+
+        case note
+        when /^([A-Ga-g])(-?[0-9]{1,2})$/
+          m = $~.captures
+          {key: m[0].upcase.to_sym, octave: m[1].to_i}
+        when /^([CDFGAcdfga])\#(-?[0-9]{1,2})$/
+          m = $~.captures
+          {key: "#{m[0].upcase}sharp".to_sym, octave: m[1].to_i}
+        when /^([DEGABdegab])b(-?[0-9]{1,2})$/
+          m = $~.captures
+          {key: "#{m[0].upcase}flat".to_sym, octave: m[1].to_i}
+        else
+          raise RuntimeError, "Invalid note format: #{note}"
+        end
+      end
+
+      def note_to_code note
+        res = parse_note note
+        key_to_code res[:key], res[:octave]
+      end
     end
   end
 end
