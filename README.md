@@ -32,11 +32,11 @@ require 'midiops'
 
 observer = MIDIOps::Observer.new
 
-observer.on_key 0, :C, 5 do
+observer.on_key 0, 'C5' do
   puts "Ch.0.C5 pressed!"
 end
 
-observer.on_key 0, :D, 5 do |vel|
+observer.on_key 0, 'D5' do |vel|
   puts "Ch.0.C5 pressed with velocity #{vel}!"
 end
 
