@@ -32,24 +32,18 @@ require 'midiops'
 
 observer = MIDIOps::Observer.new
 
-observer.on [144, 72, 127] do
+observer.on_key 0, :C, 5 do
   puts "Ch.0.C5 pressed!"
+end
+
+observer.on_key 0, :D, 5 do |vel|
+  puts "Ch.0.C5 pressed with velocity #{vel}!"
 end
 
 observer.listen_first
 ```
 
-Execute and press C5 key on your midi device.
-
-Optionally, you can set number of worker thread for massive parallelism like this:
-
-```ruby
-require 'midiops'
-
-observer = MIDIOps::Observer.new 3 # three workers
-
-# ...
-```
+Connect some MIDI keyboard and execute the script, then press key C5 or D5 on your midi device. Hooray!
 
 See `/examples` for more materials.
 
