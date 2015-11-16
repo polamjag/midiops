@@ -1,4 +1,7 @@
 require 'midiops/handler'
+require 'midiops/note'
+require 'eventmachine'
+
 require 'unimidi'
 
 module MIDIOps
@@ -11,11 +14,26 @@ module MIDIOps
       @handler.add event, handler
     end
 
+    def on_cc ch, number, &handler
+      @handler.add [176+ch, number, :ARG], handler
+    end
+
+    def on_key_press ch, key, octave, &handler
+      @handler.add [144+ch, MIDIOps::Note.key_to_code(key, octave), :ARG], handler
+    end
+    alias_method :on_key, :on_key_press
+
+    def on_key_release ch, key, octave, &handler
+      @handler.add [128+ch, MIDIOps::Note.key_to_code(key, octave), :ARG], handler
+    end
+
     def listen input
-      loop do
-        input.gets.each do |events|
-          events[:data].each do |ev|
-            @handler.handle ev
+      EM.run do
+        loop do
+          input.gets.each do |events|
+            events[:data].each do |ev|
+              @handler.handle ev
+            end
           end
         end
       end
