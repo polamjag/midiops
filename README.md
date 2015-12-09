@@ -48,6 +48,8 @@ Connect some MIDI keyboard and execute the script, then press key C5 or D5 on yo
 
 See `/examples` for more materials.
 
+Notes are like `'C3'`, `'B-1'`, `'C#4'` (sharp) or `'Db5'` (flat)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
