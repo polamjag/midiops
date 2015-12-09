@@ -32,6 +32,7 @@ require 'midiops'
 
 observer = MIDIOps::Observer.new
 
+# args: midi ch, note in string
 observer.on_key 0, 'C5' do
   puts "Ch.0.C5 pressed!"
 end

@@ -6,8 +6,8 @@ require 'unimidi'
 
 module MIDIOps
   class Observer
-    def initialize(worker_number = 1)
-      @handler = Handler.new worker_number
+    def initialize
+      @handler = Handler.new
     end
 
     def on event, &handler
@@ -23,8 +23,12 @@ module MIDIOps
     end
     alias_method :on_key, :on_key_press
 
-    def on_key_release ch, key, octave, &handler
+    def on_key_release ch, note_string, &handler
       @handler.add [128+ch, MIDIOps::Note.note_to_code(note_string), :ARG], handler
+    end
+
+    def on_pitchbend ch, &handler
+      @handler.add [224+ch, :ARG, :ARG], handler
     end
 
     def listen input

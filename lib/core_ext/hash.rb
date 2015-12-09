@@ -1,6 +1,9 @@
 class Hash
   def get_by_keys *keys
-    if keys.size == 1
+    case keys.size
+    when 0
+      self
+    when 1
       self[keys.first]
     else
       key = keys.shift

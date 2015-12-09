@@ -4,55 +4,73 @@ require 'eventmachine'
 module MIDIOps
   class Handler
     module Status
-      HAS_HANDLER        = 0
-      HANDLER_INDEFINITE = 1
-      NO_HANDLERS        = 2
+      NO_HANDLERS          = 0
+
+      HAS_HANDLER          = 1 # just have handler with current @events
+      HAS_HANDLER_WITH_ARG = 2 # have handler w/ current @events but last is :ARG
+
+      HANDLER_INDEFINITE   = 3
+      WAITING_ARG          = 4 # HANDLER_INDEFINITE but current event is :ARG
     end
 
-    def initialize worker_number
-      @handlers = {}
-      @events = []
-      @waiting_param = false
-    end
-
-    def push_job job
+    def initialize
+      @handlers     = {}
+      @events       = [] # pool for events not processed
+      @handler_args = [] # args to pass to handler method
     end
 
     def add event, handler
       @handlers.set_by_keys event, handler
     end
 
-    def has_handler?
-      if @handlers.keys?(*@events).nil?
-        Status::NO_HANDLERS
-      elsif @handlers.get_by_keys(*@events).is_a? Hash
-        @waiting_param = true unless @handlers.get_by_keys(*@events)[:ARG].nil?
-        Status::HANDLER_INDEFINITE
-      else
+    def status
+      if @handlers.get_by_keys(*@events).is_a? Proc
         Status::HAS_HANDLER
+      elsif @handlers.get_by_keys(*(@events.take(@events.size - 1)), :ARG).is_a? Proc
+        Status::HAS_HANDLER_WITH_ARG
+      elsif @handlers.get_by_keys(*(@events.take(@events.size - 1)), :ARG).is_a? Hash
+        Status::WAITING_ARG
+      elsif @handlers.get_by_keys(*@events).is_a? Hash
+        Status::HANDLER_INDEFINITE
+      elsif @handlers.get_by_keys(*@events).nil?
+        Status::NO_HANDLERS
+      else
+        raise RuntimeError, "Invalid handler status: #{self.inspect}"
       end
     end
 
+    def defer handler, args=[]
+      EM.defer(Proc.new { handler.call(*args) }) unless handler.nil?
+    end
+
+    def clear_state
+      @events.clear
+      @handler_args.clear
+    end
+
     def handle event
-      if @waiting_param
-        prc = @handlers.get_by_keys(*@events)[:ARG]
-        EM.defer(Proc.new { prc.call(event) })
+      @events << event
 
-        @events.clear
-        @waiting_param = false
-      else
-        @events << event
-
-        case has_handler?
-        when Status::HAS_HANDLER
-          EM.defer(@handlers.get_by_keys(*@events)) unless @handlers.get_by_keys(*@events).nil?
-
-          @events.clear
-        when Status::NO_HANDLERS
-          @events.clear
-        when Status::HANDLER_INDEFINITE
-          # do nothing
-        end
+      case status
+      when Status::HAS_HANDLER
+        defer @handlers.get_by_keys(*@events, event), @handler_args
+        clear_state
+      when Status::HAS_HANDLER_WITH_ARG
+        @handler_args << event
+        @events.pop
+        @events << :ARG
+        defer(
+          @handlers.get_by_keys(*@events),
+          @handler_args.dup
+        )
+        clear_state
+      when Status::WAITING_ARG
+        @handler_args << event
+        @events.pop
+        @events << :ARG
+      when Status::NO_HANDLERS
+        clear_state
+      when Status::HANDLER_INDEFINITE
       end
     end
   end
