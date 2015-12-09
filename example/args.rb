@@ -16,8 +16,7 @@ ob.on_key 0, 'C#3' do
 end
 
 ob.on_pitchbend 0 do |a, b|
-  puts "Pitchbend!!!: #{a}, #{b}"
-  p a, b
+  puts "Pitchbend!!!: #{a}, #{b} -> #{b*128 + a}"
 end
 
 ob.listen_first
