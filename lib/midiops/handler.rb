@@ -53,7 +53,7 @@ module MIDIOps
 
       case status
       when Status::HAS_HANDLER
-        defer @handlers.get_by_keys(*@events, event), @handler_args
+        defer @handlers.get_by_keys(*@events, event), @handler_args.dup
         clear_state
       when Status::HAS_HANDLER_WITH_ARG
         @handler_args << event
