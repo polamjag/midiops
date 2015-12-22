@@ -7,7 +7,7 @@ class Hash
       self[keys.first]
     else
       key = keys.shift
-      if self.key? key
+      if self.key?(key) && self[key].is_a?(Hash)
         self[key].get_by_keys(*keys)
       else
         nil

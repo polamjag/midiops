@@ -15,6 +15,7 @@ describe Hash do
         },
         get_target: [:a, :b, :c, :d],
         get_value: 1,
+        get_target_ne: [:a, :b, :c, :d, :e],
         set_target: [:a, :b, :piyo, :hoge],
         set_val: :fuga,
         set_result: {
@@ -44,6 +45,7 @@ describe Hash do
         },
         get_target: [:a, :b, :c, :d],
         get_value: 1,
+        get_target_ne: [:a, :b, :c, :d, :e],
         set_target: [:bar],
         set_val: :foo,
         set_result: {
@@ -69,7 +71,13 @@ describe Hash do
       end
     end
 
-    it 'returns nil for key which does not exists' do
+    it 'returns nil for key which does not exists (a)' do
+      @hashes.each do |h|
+        expect(h[:hash].get_by_keys(*h[:get_target_ne])).to eq nil
+      end
+    end
+
+    it 'returns nil for key which does not exists (b)' do
       @hashes.each do |h|
         expect(h[:hash].get_by_keys(:key, :which, :does, :not, :exists)).to eq nil
       end
